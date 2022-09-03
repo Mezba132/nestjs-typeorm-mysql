@@ -17,7 +17,6 @@ export class PersonService {
     async getPersonById(id : number) {
         // const personById = await this.personRepository.findOneBy({  id : id  });
         // return personById;
-
         return this.personRepository
         .createQueryBuilder('person')
         .where("person.id = :id", { id: id })

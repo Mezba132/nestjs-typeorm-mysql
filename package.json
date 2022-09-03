@@ -19,7 +19,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "migration:generate": "npm run build && npm run typeorm migration:generate -- -n"
+    "migration:generate": "npm run build && npm run typeorm migration:generate -- -n",
+    "seeder:dev": "tsnd --transpile-only seeder/main.ts"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -28,12 +29,12 @@
     "@nestjs/jwt": "^9.0.0",
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/swagger": "^6.0.5",
     "@nestjs/typeorm": "^9.0.0",
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.13.2",
     "express": "^4.18.1",
     "mysql": "^2.18.1",
-    "mysql2": "^2.3.3",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
