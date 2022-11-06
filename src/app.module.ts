@@ -1,32 +1,31 @@
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { ConfigModule } from '@nestjs/config';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import config  from '../ormConfig';
-import { PersonModule } from './person/person.module';
 import { AuthModule } from './auth/auth.module';
 import { CheckTokenMiddleware } from './middleware/checkToken.middleware';
+import { UsersModule } from './users/users.module';
+import { DatabaseModule } from 'database.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRoot(config), 
-    PersonModule, 
-    AuthModule
-  ],
+  imports: [ConfigModule.forRoot(), DatabaseModule, AuthModule, UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-      consumer
-          .apply(CheckTokenMiddleware)
-          .exclude(
-            { path : 'auth/login', method : RequestMethod.POST},
-            { path : 'auth/register', method : RequestMethod.POST }
-          )
-          .forRoutes('*');
+    consumer
+      .apply(CheckTokenMiddleware)
+      .exclude(
+        { path: 'auth/login', method: RequestMethod.POST },
+        { path: 'user/register/new', method: RequestMethod.POST },
+        { path: 'user/all', method: RequestMethod.GET },
+      )
+      .forRoutes('*');
   }
 }
-

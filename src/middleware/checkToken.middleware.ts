@@ -10,7 +10,7 @@ import { AuthService } from 'src/auth/auth.service';
 @Injectable()
 export class CheckTokenMiddleware implements NestMiddleware {
 
-    constructor(private authService : AuthService) {}
+    constructor(private authService: AuthService) { }
 
     use(req: Request, res: Response, next: NextFunction) {
         let rerfereshToken: string;
@@ -30,12 +30,11 @@ export class CheckTokenMiddleware implements NestMiddleware {
 
         const decodedToken = this.authService.verifyJwt(tokenArray[1]);
 
-        if(decodedToken) {
+        if (decodedToken) {
             next();
         }
         else {
             throw new UnauthorizedException()
         }
-        
     }
 }
