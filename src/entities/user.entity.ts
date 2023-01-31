@@ -1,38 +1,28 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class User {
-    @PrimaryGeneratedColumn()
-    id: number
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({ type : 'varchar', length : 150 })
-    fullName: string
+  @Column({ type: 'varchar', length: 150 })
+  email: string;
 
-    @Column({ type : 'varchar', length : 150 })
-    email: string
+  @Column({ type: 'varchar', length: 150 })
+  password: string;
 
-    @Column({ type : 'varchar', length : 150 })
-    phone: string
+  @Column({ type: 'varchar', length: 150, nullable: true })
+  name: string;
 
-    @Column()
-    age : number
+  @Column({ type: 'date', nullable: true })
+  dob: Date;
 
-    @Column({ type : 'varchar', length : 150 })
-    password: string
+  @Column({ default: true })
+  isActive: boolean;
 
-    @Column({ default : true })
-    isActive : boolean
-  
-    @Column({ default: () => "CURRENT_TIMESTAMP" })
-    created_at : Date
-  
-    @Column({ type : 'varchar', length : 100, default : 1 })
-    created_by : string
-  
-    @Column({ nullable : true })
-    updated_at : Date
-  
-    @Column({ type : 'varchar', length : 100, nullable : true })
-    updated_by : string
+  @Column({ default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
 
+  @Column({ nullable: true })
+  updatedAt: Date;
 }

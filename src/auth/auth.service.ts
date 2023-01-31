@@ -1,14 +1,13 @@
 import {
   BadRequestException,
   Injectable,
-  InternalServerErrorException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
-let bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 
 @Injectable()
 export class AuthService {
@@ -18,21 +17,27 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    // const user = await this.authRepository.findOne({ where: { email } });
-    // if (user) {
-    //   let passwordCheck = bcrypt.compareSync(password, user.password);
-    //   if (passwordCheck) {
-    //     return user;
-    //   } else {
-    //     throw new UnauthorizedException();
-    //   }
-    // } else {
-    //   throw new UnauthorizedException();
-    // }
+    const user = await this.authRepository.findOne({ where: { email } });
+    if (user) {
+      const passwordCheck = bcrypt.compareSync(password, user.password);
+      if (passwordCheck) {
+        const { password, ...result } = user;
+        return result;
+      } else {
+        throw new BadRequestException('User Not Found');
+      }
+    } else {
+      throw new BadRequestException('User Not Found');
+    }
   }
 
   async login(user: any) {
-    let data = { name: user.name, email: user.email };
+    const data = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      dob: user.dob,
+    };
     return {
       status: 200,
       message: 'success',

@@ -7,13 +7,13 @@ export const databaseProviders = [
     inject: [ConfigService],
     useFactory: (configService: ConfigService) => ({
       type: 'mysql',
-      host: configService.get('DB_HOST'),
+      host: configService.get('DB_HOST_DEV'),
       port: 3306,
-      username: configService.get('DB_USERNAME'),
-      password: configService.get('DB_PASSWORD'),
-      database: configService.get('DB_DATABASE'),
+      username: configService.get('DB_USER_DEV'),
+      password: '',
+      database: configService.get('DB_NAME_DEV'),
       entities,
-      synchronize: false,
+      synchronize: true,
     }),
   }),
 ];
